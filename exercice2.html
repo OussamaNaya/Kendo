@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Test Kendo</title>
+  
+  <link rel="stylesheet" href="C:/Users/LENOVO/Documents/Groupe OMF/Kendo Jquiry/lib/lib/bootstrap/dist/css/bootstrap.min.css" />
+  <!-- Kendo UI CSS -->
+  <link href="https://kendo.cdn.telerik.com/themes/6.0.0/default/default-main.css" rel="stylesheet" />
+
+  <!-- Scripts - Un seul jQuery, placé au bon endroit -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="C:/Users/LENOVO/Documents/Groupe OMF/Kendo Jquiry/lib/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Kendo UI JS - après jQuery -->
+    <script src="https://kendo.cdn.telerik.com/2023.1.314/js/kendo.all.min.js"></script>
+</head>
+<body>
+    <h1>Grid Kendo :</h1>
+    <div id="grid"></div>
+
+    <script>
+        // Définition d'un tableau de données exemple avec 3 objets représentant des personnes
+        var sampleData = [
+            { id: 1, nom: "Oussama", age: 28 },    // Objet 1 avec id, nom et âge
+            { id: 2, nom: "Othman", age: 34 },   // Objet 2 avec id, nom et âge
+            { id: 3, nom: "Mohammed", age: 22 },    // Objet 3 avec id, nom et âge
+            { id: 4, nom: "Jean", age: 28 },    // Objet 1 avec id, nom et âge
+            { id: 5, nom: "Marie", age: 34 },   // Objet 2 avec id, nom et âge
+            { id: 6, nom: "Paul", age: 22 }     // Objet 3 avec id, nom et âge
+        ];
+
+        // Initialisation d'une grille Kendo UI sur l'élément HTML avec l'id 'grid'
+        $("#grid").kendoGrid({
+            dataSource: {                        // Configuration de la source de données pour la grille
+                data: sampleData,                // On fournit les données déclarées dans sampleData
+                schema: {                       // Schéma pour décrire la structure des données
+                    model: {                    // Définition du modèle de données
+                        id: "id",               // Clé unique de chaque élément (champ 'id')
+                        fields: {               // Description des champs et de leurs types
+                            nom: { type: "string" },    // Le champ 'nom' est une chaîne de caractères
+                            age: { type: "number" }     // Le champ 'age' est un nombre
+                        }
+                    }
+                },
+                pageSize: 5                     // Nombre d'éléments à afficher par page dans la grille
+            },
+            pageable: true,                     // Activation de la pagination dans la grille
+            columns: [                         // Définition des colonnes à afficher dans la grille
+                { field: "nom", title: "Nom" },    // Colonne affichant le champ 'nom' avec le titre "Nom"
+                { field: "age", title: "Âge" }     // Colonne affichant le champ 'age' avec le titre "Âge"
+            ]
+        });
+    </script>
+
+</body>
+</html>

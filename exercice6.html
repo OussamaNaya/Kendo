@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Test Kendo</title>
+  
+  <link rel="stylesheet" href="C:/Users/LENOVO/Documents/Groupe OMF/Kendo Jquiry/lib/lib/bootstrap/dist/css/bootstrap.min.css" />
+  <!-- Kendo UI CSS -->
+  <link href="https://kendo.cdn.telerik.com/themes/6.0.0/default/default-main.css" rel="stylesheet" />
+
+  <!-- Scripts - Un seul jQuery, placé au bon endroit -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="C:/Users/LENOVO/Documents/Groupe OMF/Kendo Jquiry/lib/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Kendo UI JS - après jQuery -->
+    <script src="https://kendo.cdn.telerik.com/2023.1.314/js/kendo.all.min.js"></script>
+</head>
+<body>
+    <h3>DropDownList Kendo :</h1>
+    <p><b>Objectif : </b>Créer une ComboBox permettant de filtrer la liste et d’ajouter une nouvelle option si elle n’existe pas.</p>
+    <input id="comboBox" />
+
+
+
+
+    <script>
+        var fruits = [
+            { text: "Pomme", value: "pomme" },
+            { text: "Banane", value: "banane" },
+            { text: "Orange", value: "orange" }
+        ];
+
+        var fruitsDataSource = new kendo.data.DataSource({
+            data: fruits
+        });
+        
+       // Initialisation d’un widget Kendo ComboBox sur l’élément ayant l’id "comboBox"
+        $("#comboBox").kendoComboBox({
+            dataTextField: "text",       // Champ à afficher dans la liste déroulante
+            dataValueField: "value",     // Champ à utiliser comme valeur interne
+            dataSource: fruitsDataSource,// Source de données (pré-définie ailleurs) contenant des objets { text, value }
+            filter: "contains",          // Filtre les options en fonction du texte saisi (contient la chaîne)
+            suggest: true,               // Affiche une suggestion automatique (autocomplete) lors de la frappe
+            index: 0,                    // Position initiale de sélection : première entrée du dataSource (index 0)
+            noDataTemplate:              // Modèle affiché quand aucun résultat ne correspond
+                "Aucun résultat. Cliquez pour ajouter \"#=data#\"",
+
+            // Événement déclenché lorsqu’on quitte le champ ou que la valeur change
+            change: function() {
+                var value = this.value();                         // Valeur saisie par l’utilisateur
+                var data = this.dataSource.data();                // Tableau des objets actuellement dans le dataSource
+
+                // Vérifie si la valeur saisie existe déjà (comparaison insensible à la casse)
+                var exists = data.some(function(item) {
+                    return item.text.toLowerCase() === value.toLowerCase();
+                });
+
+                // Si la valeur n’existe pas ET n’est pas vide, on l’ajoute au dataSource
+                if (!exists && value) {
+                    // Ajoute un nouvel objet { text: valeur, value: valeur (en minuscules) }
+                    this.dataSource.add({
+                        text: value,
+                        value: value.toLowerCase()
+                    });
+                    // Sélectionne la nouvelle option ajoutée (dernier élément, index = data.length)
+                    this.select(data.length);
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Test Kendo</title>
+  
+  <link rel="stylesheet" href="C:/Users/LENOVO/Documents/Groupe OMF/Kendo Jquiry/lib/lib/bootstrap/dist/css/bootstrap.min.css" />
+  <!-- Kendo UI CSS -->
+  <link href="https://kendo.cdn.telerik.com/themes/6.0.0/default/default-main.css" rel="stylesheet" />
+
+  <!-- Scripts - Un seul jQuery, placé au bon endroit -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="C:/Users/LENOVO/Documents/Groupe OMF/Kendo Jquiry/lib/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Kendo UI JS - après jQuery -->
+    <script src="https://kendo.cdn.telerik.com/2023.1.314/js/kendo.all.min.js"></script>
+</head>
+<body>
+    <h3>DropDownList Kendo :</h1>
+        <p><b>Objectif : </b> Ajouter la possibilité d’éditer directement dans la grille avec validation (champ obligatoire).</p>
+    <div id="editableGrid"></div>
+
+
+
+    <script>
+        var data = [
+            { id: 1, nom: "Alice", age: 25 },
+            { id: 2, nom: "Bob", age: 30 }
+        ];
+
+        $("#editableGrid").kendoGrid({
+            dataSource: {
+                data: data,  // Le DataSource reçoit le tableau "data" défini ci-dessus avec les champs (id, nom, age)
+                schema: {
+                    model: {
+                        id: "id",  // Définition de la clé primaire : propriété "id" de chaque objet
+                        fields: {
+                            nom: { type: "string", validation: { required: true } },
+                            age: { type: "number", validation: { required: true, min: 0 } }
+                        }
+                    }
+                },
+                pageSize: 5  // Nombre d’enregistrements à afficher par page (pagination)
+            },
+            pageable: true,           // Activation de la pagination dans la grille
+            editable: "inline",       // Mode d’édition : "inline" (édition directement dans la rangée)
+            columns: [
+                { field: "nom", title: "Nom" },         // Colonne affichant la propriété "nom" avec le titre "Nom"
+                { field: "age", title: "Âge" },         // Colonne affichant la propriété "age" avec le titre "Âge"
+                {
+                    command: ["edit", "destroy"],       // Ajoute deux boutons par ligne : "Modifier" et "Supprimer"
+                    title: "&nbsp;",                    // Titre vide (juste pour positionner les boutons)
+                    width: "180px"                      // Largeur fixe de cette colonne de commandes
+                }
+            ],
+            toolbar: ["create"]  // Barre d’outils au-dessus de la grille : bouton "Créer" (ajouter un nouvel enregistrement)
+        });
+    </script>
+
+</body>
+</html>

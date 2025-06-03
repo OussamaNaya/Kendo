@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Test Kendo</title>
+  
+  <link rel="stylesheet" href="C:/Users/LENOVO/Documents/Groupe OMF/Kendo Jquiry/lib/lib/bootstrap/dist/css/bootstrap.min.css" />
+  <!-- Kendo UI CSS -->
+  <link href="https://kendo.cdn.telerik.com/themes/6.0.0/default/default-main.css" rel="stylesheet" />
+
+  <!-- Scripts - Un seul jQuery, placé au bon endroit -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="C:/Users/LENOVO/Documents/Groupe OMF/Kendo Jquiry/lib/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Kendo UI JS - après jQuery -->
+    <script src="https://kendo.cdn.telerik.com/2023.1.314/js/kendo.all.min.js"></script>
+</head>
+<body>
+
+  <label for="simpleDropDown">Choisissez une couleur :</label>
+  <input id="simpleDropDown" />
+
+  <script>
+      $("#simpleDropDown").kendoDropDownList({        // Sélectionne l'élément avec l'id 'simpleDropDown' et initialise un widget Kendo DropDownList dessus
+          dataTextField: "text",                     // Définit le nom du champ à afficher dans la liste déroulante (le texte visible)
+          dataValueField: "value",                    // Définit le nom du champ qui contient la valeur réelle associée à chaque option
+          dataSource: [                              // Fournit la source de données pour la liste déroulante : un tableau d'objets
+              { text: "Rouge", value: "rouge" },    // Première option : affiche "Rouge", valeur correspondante "rouge"
+              { text: "Vert", value: "vert" },      // Deuxième option : affiche "Vert", valeur correspondante "vert"
+              { text: "Bleu", value: "bleu" }       // Troisième option : affiche "Bleu", valeur correspondante "bleu"
+          ],
+          optionLabel: "Sélectionnez une couleur",   // Texte affiché par défaut quand aucune option n'est sélectionnée (label d'option vide)
+          change: function() {
+            // this.value() renvoie la valeur sélectionnée (par ex. "rouge", "vert" ou "bleu")
+            alert("Vous avez sélectionné : " + this.value());
+          }
+      });
+  </script>
+
+</body>
+</html>

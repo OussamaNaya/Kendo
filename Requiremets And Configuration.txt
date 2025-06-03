@@ -1,0 +1,9 @@
+Avant de commencer, assure-toi d’avoir bien inclus les fichiers nécessaires dans ta page HTML :
+<!-- CSS Kendo -->
+<link rel="stylesheet" href="https://kendo.cdn.telerik.com/2025.1.123/styles/kendo.default-v2.min.css" />
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Kendo UI -->
+<script src="https://kendo.cdn.telerik.com/2025.1.123/js/kendo.all.min.js"></script>

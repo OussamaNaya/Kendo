@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Test Kendo</title>
+  
+  <link rel="stylesheet" href="C:/Users/LENOVO/Documents/Groupe OMF/Kendo Jquiry/lib/lib/bootstrap/dist/css/bootstrap.min.css" />
+  <!-- Kendo UI CSS -->
+  <link href="https://kendo.cdn.telerik.com/themes/6.0.0/default/default-main.css" rel="stylesheet" />
+
+  <!-- Scripts - Un seul jQuery, placé au bon endroit -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="C:/Users/LENOVO/Documents/Groupe OMF/Kendo Jquiry/lib/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Kendo UI JS - après jQuery -->
+    <script src="https://kendo.cdn.telerik.com/2023.1.314/js/kendo.all.min.js"></script>
+</head>
+<body>
+    <h1>DropDownList Kendo :</h1>
+    <input id="remoteDropDown" />
+
+
+    <script>
+        var remoteData = [
+            { id: 10, lb: "Option 1" },
+            { id: 20, lb: "Option 2" },
+            { id: 30, lb: "Option 3" }
+        ];
+
+        var remoteDataSource = new kendo.data.DataSource({
+            transport: {
+                read: function(options) {
+                    // Simuler un appel AJAX
+                    setTimeout(function(){
+                        options.success(remoteData);
+                    }, 500);
+                }
+            },
+            schema: {
+                model: {
+                    id: "id",
+                    fields: {
+                        id: { type: "number" },
+                        lb: { type: "string" }
+                    }
+                }
+            }
+        });
+
+        $("#remoteDropDown").kendoDropDownList({
+            dataSource: remoteDataSource,
+            dataTextField: "lb",      // Définit le nom du champ à afficher dans la liste déroulante (le texte visible)
+            dataValueField: "lb",     // Définit le nom du champ qui contient la valeur réelle associée à chaque option
+            optionLabel: "Choisissez une option",
+            columns: [                         // Définition des colonnes à afficher dans la grille
+                { field: "lb", title: "Lib" },    // Colonne affichant le champ 'nom' avec le titre "Nom"
+            ],
+            change: function() {
+            // this.value() renvoie la valeur sélectionnée (par ex. "rouge", "vert" ou "bleu")
+                alert("Vous avez sélectionné : " + this.value());
+            }
+        });
+
+    </script>
+
+</body>
+</html>

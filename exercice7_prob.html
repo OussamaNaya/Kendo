@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Test Kendo</title>
+  
+  <link rel="stylesheet" href="C:/Users/LENOVO/Documents/Groupe OMF/Kendo Jquiry/lib/lib/bootstrap/dist/css/bootstrap.min.css" />
+  <!-- Kendo UI CSS -->
+  <link href="https://kendo.cdn.telerik.com/themes/6.0.0/default/default-main.css" rel="stylesheet" />
+
+  <!-- Scripts - Un seul jQuery, placé au bon endroit -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="C:/Users/LENOVO/Documents/Groupe OMF/Kendo Jquiry/lib/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Kendo UI JS - après jQuery -->
+    <script src="https://kendo.cdn.telerik.com/2023.1.314/js/kendo.all.min.js"></script>
+</head>
+<body>
+    <h3>DropDownList Kendo :</h1>
+    <b>Objectif : </b>
+    <ul>
+        <li>Créer une Grid Kendo connectée à une DataSource distante.</li>
+        <li></li>Implémenter la recherche dans la grille.</li>
+        <li>Simuler les appels AJAX pour lire (read) et mettre à jour (update) des données avec des fonctions JS statiques.</li>
+    </ul>
+    <div id="ajaxGrid" style="margin-top: 20px;"></div>
+
+
+
+    <script>
+        // Données statiques simulées côté serveur
+        var fakeServerData = [
+            { id: 1, nom: "Alice", age: 25 },
+            { id: 2, nom: "Bob", age: 30 },
+            { id: 3, nom: "Charles", age: 22 },
+            { id: 4, nom: "Diane", age: 27 }
+        ];
+
+        // Fonction JS simulant une réponse AJAX (lecture des données)
+        function fakeAjaxRead(options) {
+            setTimeout(function() {
+                // Retourner les résultats filtrés à la grille
+                options.success(fakeServerData);
+            }, 300); // simule une latence réseau
+        }
+
+        // Fonction JS simulant une réponse AJAX (mise à jour des données)
+        function fakeAjaxUpdate(options) {
+            setTimeout(function() {
+                var updatedItem = options.data;
+
+                // Trouver et mettre à jour les données côté "serveur"
+                for (var i = 0; i < fakeServerData.length; i++) {
+                    if (fakeServerData[i].id === updatedItem.id) {
+                        fakeServerData[i].nom = updatedItem.nom;
+                        fakeServerData[i].age = updatedItem.age;
+                        break;
+                    }
+                }
+
+                // Retourner l'élément mis à jour
+                options.success(updatedItem);
+            }, 300); // simule une latence réseau
+        }
+
+        // Configuration de la DataSource Kendo avec AJAX simulé
+        var gridDataSource = new kendo.data.DataSource({
+            transport: {
+                read: fakeAjaxRead,
+                update: fakeAjaxUpdate
+            },
+            schema: {
+                model: {
+                    id: "id",
+                    fields: {
+                        id: { editable: false, nullable: false },
+                        nom: { type: "string", validation: { required: true } },
+                        age: { type: "number", validation: { required: true, min: 1 } }
+                    }
+                }
+            },
+            pageSize: 5
+        });
+
+        // Initialiser la grille Kendo
+        $("#ajaxGrid").kendoGrid({
+            dataSource: gridDataSource,
+            pageable: true,
+            editable: "inline",
+            toolbar: ["search"], // Barre de recherche intégrée (en option)
+            columns: [
+                { field: "id", title: "ID", width: "50px" },
+                { field: "nom", title: "Nom", width: "150px" },
+                { field: "age", title: "Âge", width: "80px" },
+                { command: ["edit"], title: "Action", width: "120px" }
+            ]
+        });
+
+    </script>
+
+</body>
+</html>

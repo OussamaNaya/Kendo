@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Test Kendo</title>
+  
+  <link rel="stylesheet" href="C:/Users/LENOVO/Documents/Groupe OMF/Kendo Jquiry/lib/lib/bootstrap/dist/css/bootstrap.min.css" />
+  <!-- Kendo UI CSS -->
+  <link href="https://kendo.cdn.telerik.com/themes/6.0.0/default/default-main.css" rel="stylesheet" />
+
+  <!-- Scripts - Un seul jQuery, placé au bon endroit -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="C:/Users/LENOVO/Documents/Groupe OMF/Kendo Jquiry/lib/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Kendo UI JS - après jQuery -->
+    <script src="https://kendo.cdn.telerik.com/2023.1.314/js/kendo.all.min.js"></script>
+</head>
+<body>
+    <h3>DropDownList Kendo :</h1>
+    <p><b>Objectif : </b> Afficher la valeur sélectionnée dans un div à côté quand on change l’option.</p>
+    <label for="fruitDropDown">Fruits :</label>
+    <input id="fruitDropDown" />
+    <div id="selectedFruit" style="margin-top:10px; font-weight:bold;"></div>
+
+
+
+
+    <script>
+       $("#fruitDropDown").kendoDropDownList({
+            dataSource: [
+                { text: "Pomme", value: "pomme" },
+                { text: "Banane", value: "banane" },
+                { text: "Orange", value: "orange" }
+            ],
+            dataTextField: "text",
+            dataValueField: "value",
+            optionLabel: "Choisissez un fruit",
+            change: function() {
+                var val = this.value();
+                var txt = this.text();
+                $("#selectedFruit").text(val ? `Fruit sélectionné : ${txt} (valeur : ${val})` : "Aucun fruit sélectionné");
+            }
+        });
+    </script>
+
+</body>
+</html>
